@@ -7,5 +7,8 @@
 *.tfvars 
 
 node_modules/
+<<<<<<< HEAD
 
+=======
+>>>>>>> 66f7e3bfa0f8a434b1b6ec507a489a1677ead51f
 coverage/
