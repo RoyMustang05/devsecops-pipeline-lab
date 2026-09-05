@@ -13,4 +13,5 @@ function validateRange(value, min = 0, max = 120) {
  
 module.exports = { calculateTotal, getUserName, validateRange };
 
-const apiKey = "sk_live_51Hxxxxxxxxxxxxxxxxxxxxxxxxx"; // secreto de prueba, se borra después
+const fakeAwsAccessKeyId = "AKIA7K3M9Q2P8W5R1Z0X"; // secreto de prueba, se borra después
+const fakeAwsSecretAccessKey = "pL9mN2qR7sT4uV8wX1yZ3aB6cD0eF5gH9jK2lM7n"; // secreto de prueba, se borra después
