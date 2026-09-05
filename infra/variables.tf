@@ -1,17 +1,17 @@
-variable "aws_region" { 
+variable "aws_region" {
 
-  type    = string 
+  type = string
 
-  default = "us-east-1" 
+  default = "us-east-1"
 
-} 
+}
 
-  
 
-variable "bucket_name" { 
 
-  description = "devsecops-lab-perezsib-2026" 
+variable "bucket_name" {
 
-  type        = string 
+  description = "Nombre único global del bucket S3"
 
-} 
+  type = string
+
+}

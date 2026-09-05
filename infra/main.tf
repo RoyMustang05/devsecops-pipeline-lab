@@ -1,116 +1,116 @@
-terraform { 
+terraform {
 
-  required_version = ">= 1.5.0" 
+  required_version = ">= 1.5.0"
 
-  required_providers { 
+  required_providers {
 
-    aws = { 
+    aws = {
 
-      source  = "hashicorp/aws" 
+      source = "hashicorp/aws"
 
-      version = "~> 5.0" 
+      version = "~> 5.0"
 
-    } 
+    }
 
-  } 
+  }
 
-} 
+}
 
-  
 
-provider "aws" { 
 
-  region = var.aws_region 
+provider "aws" {
 
-} 
+  region = var.aws_region
 
-  
+}
 
-resource "aws_s3_bucket" "site" { 
 
-  bucket = var.bucket_name 
 
-  tags = { 
+resource "aws_s3_bucket" "site" {
 
-    Proyecto = "DevSecOps-Lab3-4" 
+  bucket = var.bucket_name
 
-    Entorno  = "laboratorio" 
+  tags = {
 
-  } 
+    Proyecto = "DevSecOps-Lab3-4"
 
-} 
+    Entorno = "laboratorio"
 
-  
+  }
 
-resource "aws_s3_bucket_public_access_block" "site" { 
+}
 
-  bucket                  = aws_s3_bucket.site.id 
 
-  block_public_acls       = false 
 
-  block_public_policy     = false 
+resource "aws_s3_bucket_public_access_block" "site" {
 
-  ignore_public_acls      = false 
+  bucket = aws_s3_bucket.site.id
 
-  restrict_public_buckets = false 
+  block_public_acls = false
 
-} 
+  block_public_policy = false
 
-  
+  ignore_public_acls = false
 
-resource "aws_s3_bucket_website_configuration" "site" { 
+  restrict_public_buckets = false
 
-  bucket = aws_s3_bucket.site.id 
+}
 
-  index_document { 
 
-    suffix = "index.html" 
 
-  } 
+resource "aws_s3_bucket_website_configuration" "site" {
 
-} 
+  bucket = aws_s3_bucket.site.id
 
-  
+  index_document {
 
-resource "aws_s3_bucket_policy" "public_read" { 
+    suffix = "index.html"
 
-  bucket     = aws_s3_bucket.site.id 
+  }
 
-  depends_on = [aws_s3_bucket_public_access_block.site] 
+}
 
-  policy = jsonencode({ 
 
-    Version = "2012-10-17" 
 
-    Statement = [{ 
+resource "aws_s3_bucket_policy" "public_read" {
 
-      Sid       = "PublicReadGetObject" 
+  bucket = aws_s3_bucket.site.id
 
-      Effect    = "Allow" 
+  depends_on = [aws_s3_bucket_public_access_block.site]
 
-      Principal = "*" 
+  policy = jsonencode({
 
-      Action    = "s3:GetObject" 
+    Version = "2012-10-17"
 
-      Resource  = "${aws_s3_bucket.site.arn}/*" 
-          }] 
+    Statement = [{
 
-  }) 
+      Sid = "PublicReadGetObject"
 
-} 
+      Effect = "Allow"
 
-  
+      Principal = "*"
 
-resource "aws_s3_object" "index" { 
+      Action = "s3:GetObject"
 
-  bucket       = aws_s3_bucket.site.id 
+      Resource = "${aws_s3_bucket.site.arn}/*"
+    }]
 
-  key          = "index.html" 
+  })
 
-  source       = "${path.module}/website/index.html" 
+}
 
-  content_type = "text/html" 
 
-  etag         = filemd5("${path.module}/website/index.html") 
+
+resource "aws_s3_object" "index" {
+
+  bucket = aws_s3_bucket.site.id
+
+  key = "index.html"
+
+  source = "${path.module}/website/index.html"
+
+  content_type = "text/html"
+
+  etag = filemd5("${path.module}/website/index.html")
 
 } 
