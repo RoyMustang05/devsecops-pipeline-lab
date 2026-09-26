@@ -110,10 +110,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
       - run: terraform init
         working-directory: ./environments/dev
-      - name: Importar bucket existente si aplica
-        run: terraform import -var="bucket_name=${{ secrets.BUCKET_NAME }}" module.site.aws_s3_bucket.site "${{ secrets.BUCKET_NAME }}" || true
-        working-directory: ./environments/dev
-      - run: terraform apply -auto-approve -var="bucket_name=${{ secrets.BUCKET_NAME }}"
+      - run: terraform apply -auto-approve
         working-directory: ./environments/dev
  
   terraform-destroy:
@@ -130,5 +127,5 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
       - run: terraform init
         working-directory: ./environments/dev
-      - run: terraform destroy -auto-approve -var="bucket_name=${{ secrets.BUCKET_NAME }}"
+      - run: terraform destroy -auto-approve
         working-directory: ./environments/dev
